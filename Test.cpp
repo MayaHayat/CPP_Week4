@@ -89,5 +89,9 @@ TEST_CASE("Make sure comparisons work properly") {
     Fraction fr1(1,4);
     Fraction fr2(5,3);
 
-    //CHECK (Fraction(1,3)== Fraction(1,6)+ Fraction(1,6));
+    CHECK_NOTHROW(fr1++);
+    CHECK_NOTHROW(fr1--);
+    CHECK_NOTHROW(++fr2);
+    CHECK_NOTHROW(--fr2);
+
 }
