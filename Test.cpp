@@ -2,6 +2,7 @@
 #include "sources/Fraction.hpp"
 
 using namespace std;
+using namespace ariel;
 
 // #1
 TEST_CASE("Make sure constructor works properly") {
@@ -18,13 +19,11 @@ TEST_CASE("Make sure constructor works properly") {
 
 // #2
 TEST_CASE("Check addition - simple") {
-    Fraction fr1(1,4);
-    Fraction fr2(2,4);
+    Fraction fr1(2,4);
+    Fraction fr2(1,4);
 
-    Fraction sum(3,4);
-    Fraction ans = fr1+fr2;
-
-    CHECK(ans == sum);
+    CHECK((fr1+fr2) == Fraction(3,4));
+    CHECK((fr1-fr2) == Fraction(1,4));
 
 }
 
@@ -33,10 +32,8 @@ TEST_CASE("Check addition - harder") {
     Fraction fr1(1,4);
     Fraction fr2(1,8);
 
-    Fraction sum(3,8);
-    Fraction ans = fr1+fr2;
-
-    CHECK(ans == sum);
+    CHECK((fr1+fr2) == Fraction(3,8));
+    CHECK((fr1-fr2) == Fraction(1,8));
 }
 
 // #4
@@ -47,6 +44,7 @@ TEST_CASE("Check addition - difficult") {
     Fraction sum(7,12);
     Fraction ans = fr1+fr2;
     CHECK(ans == sum);
+    CHECK_NOTHROW(fr1+fr2);
 }
 
 // #5
@@ -54,16 +52,42 @@ TEST_CASE("Check multiplication") {
     Fraction fr1(1,4);
     Fraction fr2(2,4);
 
-    Fraction sum(1,8);
     Fraction ans = fr1*fr2;
-
-    CHECK(ans == sum);
+    
+    CHECK((fr1*fr2) == Fraction(1,8));
+    CHECK((fr2/fr1) == Fraction(2));
 }
 
 // #6
 TEST_CASE("Denominator cannot be zero") {
-    Fraction fr1(1,0);
-    CHECK_THROWS(fr1.getDenominator());
+    Fraction frc(1,1);
+    CHECK_NOTHROW(Fraction(1,0));
+    CHECK_THROWS(frc.setDenominator(0));
+
+}
+
+// #7
+TEST_CASE("Fractions are simplified") {
+    CHECK(Fraction(4,8) == Fraction(1,2));
+    CHECK(Fraction(3/9) != Fraction(1,2));
+}
+
+// #8
+TEST_CASE("Make sure setting works properly") {
+    Fraction fr1(1,4);
+    Fraction fr2(5,3);
+
+    CHECK_NOTHROW(fr1.setNumerator(5));
+    CHECK(fr1.getNumerator() == 5);
+    CHECK_NOTHROW(fr2.setDenominator(5));
+    CHECK(fr2.getDenominator() == 5);
 }
 
 
+// #9
+TEST_CASE("Make sure comparisons work properly") {
+    Fraction fr1(1,4);
+    Fraction fr2(5,3);
+
+    //CHECK (Fraction(1,3)== Fraction(1,6)+ Fraction(1,6));
+}
