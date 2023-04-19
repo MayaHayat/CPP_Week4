@@ -32,15 +32,19 @@ class Fraction{
 
     double operator+(double num);
 
+    friend Fraction operator+(double num, const Fraction &frac);
+
     Fraction operator-(Fraction& other);
 
-    double operator-(double f);
+    double operator-(double num);
+
+    friend Fraction operator-(double num, const Fraction &frac);
 
     Fraction operator*(Fraction& other);
 
-    double operator*(double f);
+    double operator*(double num);
     
-    friend Fraction operator*(double f, const Fraction &frac);
+    friend Fraction operator*(double num, const Fraction &frac);
     
     Fraction operator/( Fraction& other);
     
@@ -49,12 +53,20 @@ class Fraction{
     bool operator!=(const Fraction& other) const;
     
     bool operator<(const Fraction& other) const;
+
+    bool operator<(double num) const;
     
     bool operator>(const Fraction& other) const;
     
+    bool operator>(double num) const;
+    
     bool operator<=(const Fraction& other) const;
+
+    bool operator<=(double num) const;
     
     bool operator>=(const Fraction& other) const;
+    
+    bool operator>=(double num) const;
     
     Fraction& operator++();
     

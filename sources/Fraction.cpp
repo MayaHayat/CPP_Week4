@@ -16,7 +16,7 @@ Fraction :: Fraction(int numerator , int denominator){
 Fraction::Fraction(double numerator) {
     this -> numerator = numerator;
     this -> denominator = 1;
-    
+    reduce();
 }
 
 // ----------- Getters & Setters------------
@@ -66,10 +66,12 @@ Fraction Fraction::operator+(Fraction& frc) {
     return Fraction(num,den);
 }
 
-
 double Fraction::operator+(double num){
-    return this -> numerator/this -> denominator + num;
+    double numerator = this -> numerator + num*this->denominator;
+    return (numerator/this -> denominator);
 }
+
+
 
 Fraction Fraction::operator-(Fraction& frc) {
     int num = (this-> numerator * frc.denominator) - (frc.numerator * this -> denominator);
@@ -78,8 +80,14 @@ Fraction Fraction::operator-(Fraction& frc) {
 }
 
 double Fraction::operator-(double num){
-    return this -> numerator/this -> denominator - num;
+    double numerator = this -> numerator - num*this->denominator;
+    return (numerator/this -> denominator);
 }
+
+// Fraction operator-(double num, const Fraction &frac){
+    
+//     return num -(frac.numerator/frac.denominator);
+// }
 
 
 Fraction Fraction::operator*( Fraction& frc)  {
@@ -90,7 +98,7 @@ Fraction Fraction::operator*( Fraction& frc)  {
 
 double Fraction::operator*(double num){
     
-    return (this->numerator/this->denominator)* num;
+    return (this->numerator * num)/this->denominator;
 }
 
 Fraction operator*(double num, const Fraction &frac){
@@ -112,6 +120,7 @@ bool Fraction :: operator==(const Fraction& frc) const{
     return false;
 }
 
+
 bool Fraction :: operator!=(const Fraction& frc) const{
     if ((this ->numerator/this -> denominator) != (frc.numerator/frc.denominator)){
         return true;
@@ -120,28 +129,56 @@ bool Fraction :: operator!=(const Fraction& frc) const{
 }
 
 bool Fraction :: operator<=(const Fraction& frc) const{
-    if (this -> numerator/this -> denominator <= frc.numerator/frc.denominator){
+    if ((this -> numerator* frc.denominator) <= (frc.numerator*this -> denominator)){
+        return true;
+    } 
+    return false;
+}
+
+bool Fraction :: operator<=(double num) const{
+    if (this -> numerator <= num*this -> denominator){
         return true;
     } 
     return false;
 }
 
 bool Fraction :: operator<(const Fraction& frc) const{
-    if ((this ->numerator/this -> denominator) < (frc.numerator/frc.denominator)){
+    if ((this -> numerator* frc.denominator) < (frc.numerator*this -> denominator)){
+        return true;
+    } 
+    return false;
+}
+
+bool Fraction :: operator<(double num) const{
+    if (this -> numerator < num*this -> denominator){
         return true;
     } 
     return false;
 }
 
 bool Fraction :: operator>=(const Fraction& frc) const{
-    if ((this -> numerator/this -> denominator) >= (frc.numerator/frc.denominator)){
+    if ((this -> numerator* frc.denominator) >= (frc.numerator*this -> denominator)){
+        return true;
+    } 
+    return false;
+}
+
+bool Fraction :: operator>=(double num) const{
+    if (this -> numerator >= num * this -> denominator){
         return true;
     } 
     return false;
 }
 
 bool Fraction :: operator>(const Fraction& frc) const{
-    if ((this -> numerator/this -> denominator) > (frc.numerator/frc.denominator)){
+    if ((this -> numerator* frc.denominator) > (frc.numerator*this -> denominator)){
+        return true;
+    } 
+    return false;
+}
+
+bool Fraction :: operator>(double num) const{
+    if (this -> numerator > num* this->denominator){
         return true;
     } 
     return false;

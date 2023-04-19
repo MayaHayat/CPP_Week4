@@ -18,7 +18,7 @@ TEST_CASE("Make sure constructor works properly") {
 }
 
 // #2
-TEST_CASE("Check addition - simple") {
+TEST_CASE("Check addition & substraction - simple") {
     Fraction fr1(2,4);
     Fraction fr2(1,4);
 
@@ -28,7 +28,7 @@ TEST_CASE("Check addition - simple") {
 }
 
 // #3
-TEST_CASE("Check addition - harder") {
+TEST_CASE("Check addition & substraction - harder") {
     Fraction fr1(1,4);
     Fraction fr2(1,8);
 
@@ -37,7 +37,7 @@ TEST_CASE("Check addition - harder") {
 }
 
 // #4
-TEST_CASE("Check addition - difficult") {
+TEST_CASE("Check addition & substraction - difficult") {
     Fraction fr1(1,4);
     Fraction fr2(1,3);
 
@@ -45,10 +45,13 @@ TEST_CASE("Check addition - difficult") {
     Fraction ans = fr1+fr2;
     CHECK(ans == sum);
     CHECK_NOTHROW(fr1+fr2);
+    CHECK(fr1+2.1 == (2.35));
+    CHECK(fr1-0.25 == (1/4));
+
 }
 
 // #5
-TEST_CASE("Check multiplication") {
+TEST_CASE("Check multiplication & divition") {
     Fraction fr1(1,4);
     Fraction fr2(2,4);
 
@@ -67,7 +70,7 @@ TEST_CASE("Denominator cannot be zero") {
 }
 
 // #7
-TEST_CASE("Fractions are simplified") {
+TEST_CASE("Fraction should be simplified") {
     CHECK(Fraction(4,8) == Fraction(1,2));
     CHECK(Fraction(0/1) == Fraction(0,2));
 }
@@ -85,7 +88,7 @@ TEST_CASE("Make sure setting works properly") {
 
 
 // #9
-TEST_CASE("Make sure comparisons work properly") {
+TEST_CASE("Make sure ++ & -- work properly on both sides") {
     Fraction fr1(1,4);
     Fraction fr2(5,3);
 
@@ -94,10 +97,18 @@ TEST_CASE("Make sure comparisons work properly") {
     CHECK_NOTHROW(++fr2);
     CHECK_NOTHROW(--fr2);
 
+    Fraction fr3(2,4);
+    Fraction fr4(9,3);
+
+    CHECK( fr3++ == Fraction(3,2));
+    CHECK( fr4-- == Fraction(2,1));
+    CHECK( ++fr3 == Fraction(5,2));
+    CHECK( --fr4 == Fraction(1,1));
+
 }
 
 // #10
-TEST_CASE(" Check the reduce function") {
+TEST_CASE("Check the reduce function") {
     Fraction fr1(2,4);
     Fraction fr2(9,3);
 
@@ -106,4 +117,28 @@ TEST_CASE(" Check the reduce function") {
 
     CHECK( fr1 == Fraction(1,2));
     CHECK( fr2 == Fraction(3,1));
+
+}
+
+
+// #11
+TEST_CASE("Check all multiplications") {
+    Fraction fr1(2,4);
+    Fraction fr2(9,3);
+
+    CHECK( fr1*2 == Fraction(2,2));
+    CHECK( 4*fr2 == Fraction(12,1));
+}
+
+// #12
+TEST_CASE("Test comparisons") {
+    Fraction fr1(1,2);
+    Fraction fr2(9,3);
+
+    CHECK(fr1 < 0.51);
+    CHECK(fr1 > 0.25);
+
+    CHECK(fr2++ <= 4.1);
+    CHECK(--fr2 >= -1.2);
+
 }
