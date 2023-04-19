@@ -68,6 +68,14 @@ class Fraction{
     
     friend std::istream& operator>>(std::istream& in, Fraction& fraction);
 
+
+    // -------------------- Help Function ---------------------------
+
+    int getGCD (int num1, int num2);
+
+    void reduce();
+
+
 };
 
     

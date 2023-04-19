@@ -61,7 +61,7 @@ TEST_CASE("Check multiplication") {
 // #6
 TEST_CASE("Denominator cannot be zero") {
     Fraction frc(1,1);
-    CHECK_NOTHROW(Fraction(1,0));
+    CHECK_THROWS(Fraction(1,0));
     CHECK_THROWS(frc.setDenominator(0));
 
 }
@@ -69,7 +69,7 @@ TEST_CASE("Denominator cannot be zero") {
 // #7
 TEST_CASE("Fractions are simplified") {
     CHECK(Fraction(4,8) == Fraction(1,2));
-    CHECK(Fraction(3/9) != Fraction(1,2));
+    CHECK(Fraction(0/1) == Fraction(0,2));
 }
 
 // #8
@@ -94,4 +94,16 @@ TEST_CASE("Make sure comparisons work properly") {
     CHECK_NOTHROW(++fr2);
     CHECK_NOTHROW(--fr2);
 
+}
+
+// #10
+TEST_CASE(" Check the reduce function") {
+    Fraction fr1(2,4);
+    Fraction fr2(9,3);
+
+    fr1.reduce();
+    fr2.reduce();
+
+    CHECK( fr1 == Fraction(1,2));
+    CHECK( fr2 == Fraction(3,1));
 }
