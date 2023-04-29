@@ -1,5 +1,7 @@
 #include "doctest.h"
 #include "sources/Fraction.hpp"
+#include <sstream>
+
 
 using namespace std;
 using namespace ariel;
@@ -99,9 +101,8 @@ TEST_CASE("Make sure ++ & -- work properly on both sides") {
 
     Fraction fr3(2,4);
     Fraction fr4(9,3);
-
-    CHECK( fr3++ == Fraction(3,2));
-    CHECK( fr4-- == Fraction(2,1));
+    CHECK( fr3++ == Fraction(1,2));
+    CHECK( fr4-- == Fraction(3,1));
     CHECK( ++fr3 == Fraction(5,2));
     CHECK( --fr4 == Fraction(1,1));
 
@@ -140,5 +141,17 @@ TEST_CASE("Test comparisons") {
 
     CHECK(fr2++ <= 4.1);
     CHECK(--fr2 >= -1.2);
+
+}
+
+// // #13
+TEST_CASE("Test input") {
+    std::stringstream ss_in("1 -2 6 9");
+    Fraction frac1, frac2;
+    ss_in >> frac1 >> frac2;
+
+    CHECK(frac1 == Fraction{-1,2});
+
+    CHECK(frac2 ==Fraction{6,9});
 
 }

@@ -15,9 +15,11 @@ class Fraction{
 
     public:
 
+    Fraction();
+
     Fraction(int numerator, int denominator);
 
-    Fraction(double number);
+    Fraction(float number);
     
     void setNumerator(int);
     void setDenominator(int);
@@ -28,45 +30,68 @@ class Fraction{
     
     // ----------------- Requested functions ---------------------
 
-    Fraction operator+(Fraction& other);
+    Fraction operator+(const Fraction& other) const;
 
-    double operator+(double num);
+    Fraction operator+(float num);
 
-    friend Fraction operator+(double num, const Fraction &frac);
+    friend Fraction operator+(float num, const Fraction &frac);
 
-    Fraction operator-(Fraction& other);
+    friend Fraction operator+(const Fraction &frac, float num);
 
-    double operator-(double num);
+    Fraction operator-(const Fraction& other);
 
-    friend Fraction operator-(double num, const Fraction &frac);
+    float operator-(float num);
 
-    Fraction operator*(Fraction& other);
+    friend Fraction operator-(float num, const Fraction &frac);
 
-    double operator*(double num);
+    friend Fraction operator-(const Fraction &frac, float num);
+
+    Fraction operator*(const Fraction& other);
+
+    float operator*(float num);
+    //Fraction operator*(float num);
     
-    friend Fraction operator*(double num, const Fraction &frac);
+    friend Fraction operator*(float num, const Fraction &frac);
     
-    Fraction operator/( Fraction& other);
+    friend Fraction operator*(const Fraction &frac, float num);
+
+    Fraction operator/(const Fraction& other);
+
+    float operator/(float num);
     
+    friend Fraction operator/(float num, const Fraction &frac);
+    
+    friend Fraction operator/(const Fraction &frac, float num);
+
+
     bool operator==(const Fraction& other) const;
+
+    bool operator==(const float& num) const;
     
-    bool operator!=(const Fraction& other) const;
-    
+
     bool operator<(const Fraction& other) const;
 
-    bool operator<(double num) const;
-    
+    bool operator<(float num) const;
+
+    friend bool operator<(const float& num, const Fraction& frc);
+
+    friend bool operator>(const float& num, const Fraction& frc);
+
     bool operator>(const Fraction& other) const;
     
-    bool operator>(double num) const;
+    bool operator>(float num) const;
     
     bool operator<=(const Fraction& other) const;
 
-    bool operator<=(double num) const;
+    bool operator<=(float num) const;
+
+    friend bool operator<=(const float& num, const Fraction& frc);
+
+    friend bool operator>=(const float& num, const Fraction& frc);
     
     bool operator>=(const Fraction& other) const;
     
-    bool operator>=(double num) const;
+    bool operator>=(float num) const;
     
     Fraction& operator++();
     
@@ -78,7 +103,7 @@ class Fraction{
     
     friend std::ostream& operator<<(std::ostream& out, const Fraction& fraction);
     
-    friend std::istream& operator>>(std::istream& in, Fraction& fraction);
+    friend std::istream& operator>>(std::istream& inpt, Fraction& fraction);
 
 
     // -------------------- Help Function ---------------------------
