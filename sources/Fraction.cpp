@@ -5,13 +5,9 @@
 #include <cstdlib>
 
 using namespace std;
-namespace ariel{
 
 
-Fraction :: Fraction(){
-    this -> numerator = 0;
-    this -> denominator = 1;
-}
+
 
 Fraction :: Fraction(int numerator , int denominator){
     if (denominator == 0 && numerator != 0){
@@ -85,204 +81,265 @@ void Fraction :: setDenominator(int denominator){
 // --------------- Requested functions ------------------
 
 
+// *this (frc1) +frc
 Fraction Fraction::operator+(const Fraction& frc) const{
-    long check1 = (long(this -> numerator) * frc.denominator) + (long(frc.numerator) * this -> denominator);
+    
+    //cout << "1" << endl;
+    long check1 = (long(this -> numerator) * frc.denominator) + (long(frc.getNumerator()) * this -> denominator);
     long check2 = long(this->denominator) * frc.denominator;
      if (check1 > INT_MAX || check2 > INT_MAX ||  check1 < INT_MIN || check2 < INT_MIN){
         throw std::overflow_error (" Note we're using INTEGERS");
     }
-    int num = (this -> numerator * frc.denominator) + (frc.numerator * this -> denominator);
+    int num = (this -> numerator * frc.denominator) + (frc.getNumerator() * this -> denominator);
     int den = this -> denominator * frc.denominator;
     return Fraction(num,den);
 }
 
+// *this (frc1) +num
 Fraction Fraction::operator+(float num){
+    long check1 = (long(this -> numerator) *num) ;
+    long check2 = long(this->denominator);
+     if (check1 > INT_MAX || check2 > INT_MAX ||  check1 < INT_MIN || check2 < INT_MIN){
+        throw std::overflow_error (" Note we're using INTEGERS");
+    }
+    
+   // cout << "2" << endl;
     Fraction ans(num);
     Fraction result(*this+ans);
     return result;
 }
 
-Fraction operator+(float num, const Fraction &frac){
-    return (double(frac.numerator)/frac.denominator) + (num);
+// num + frc
+Fraction operator+(float num, const Fraction &frc){
+    //cout << "3" << endl;
+    long check1 = (long(num) * frc.denominator)+frc.numerator ;
+    long check2 = long(frc.denominator);
+    if (check1 > INT_MAX || check2 > INT_MAX ||  check1 < INT_MIN || check2 < INT_MIN){
+        throw std::overflow_error (" Note we're using INTEGERS");
+    }
+    return (double(frc.getNumerator())/frc.getDenominator()) + (num);
 }
 
 
+//*this (frc1) + frc
 Fraction Fraction::operator-(const Fraction& frc) {
-    long check1 = (long(this -> numerator) * frc.denominator) - (long(frc.numerator) * this -> denominator);
-    long check2 = long(this->denominator) * frc.denominator;
+    //cout << "5" << endl;
+    long check1 = (long(this -> numerator) * frc.getDenominator()) - (long(frc.getNumerator()) * this -> denominator);
+    long check2 = long(this->denominator) * frc.getDenominator();
      if (check1 > INT_MAX || check2 > INT_MAX ||  check1 < INT_MIN || check2 < INT_MIN){
         throw std::overflow_error (" Note we're using INTEGERS");
     }
-    int num = (this-> numerator * frc.denominator) - (frc.numerator * this -> denominator);
-    int den = this -> denominator * frc.denominator;
+    int num = (this-> numerator * frc.getDenominator()) - (frc.getNumerator() * this -> denominator);
+    int den = this -> denominator * frc.getDenominator();
     return Fraction(num, den);
 }
 
+// *this -num
 float Fraction::operator-(float num){
+    //cout << "6" << endl;
+    long check1 = long(this -> numerator) - num * this->denominator ;
+    long check2 = long(this->denominator);
+     if (check1 > INT_MAX || check2 > INT_MAX ||  check1 < INT_MIN || check2 < INT_MIN){
+        throw std::overflow_error (" Note we're using INTEGERS");
+    }
     float numerator = this -> numerator - num * this->denominator;
     return ((numerator)/this -> denominator);
 }
 
-Fraction operator-(float num, const Fraction &frac){
-    return (num) - (double(frac.numerator)/frac.denominator);
-}
-
-Fraction operator-(const Fraction &frac, float num){
-    return (double(frac.numerator)/frac.denominator) - num;
-}
-
-
-Fraction Fraction::operator*(const Fraction& frc){
-    long check1 = long(this->numerator) * frc.numerator;
-    long check2 = long(this->denominator) * frc.denominator;
-     if (check1 > INT_MAX || check2 > INT_MAX ||  check1 < INT_MIN || check2 < INT_MIN){
+// num - frc
+Fraction operator-(float num, const Fraction &frc){
+    //cout << "7" << endl;
+    long check1 = (long(num) * frc.denominator)-frc.numerator ;
+    long check2 = long(frc.denominator);
+    if (check1 > INT_MAX || check2 > INT_MAX ||  check1 < INT_MIN || check2 < INT_MIN){
         throw std::overflow_error (" Note we're using INTEGERS");
     }
-    int num = (this->numerator * frc.numerator);
-    int den = this ->denominator * frc.denominator;
+    return (num) - (double(frc.getNumerator())/frc.getDenominator());
+}
+
+// *this(frc1)* frc
+Fraction Fraction::operator*(const Fraction& frc){
+    //cout << "8" << endl;
+    long check1 = long(this->numerator) * frc.getNumerator();
+    long check2 = long(this->denominator) * frc.getDenominator();
+    if (check1 > INT_MAX || check2 > INT_MAX ||  check1 < INT_MIN || check2 < INT_MIN){
+        throw std::overflow_error (" Note we're using INTEGERS");
+    }
+    int num = (this->numerator * frc.getNumerator());
+    int den = this ->denominator * frc.getDenominator();
     return Fraction(num, den);
 }
 
+// *this (frc) *num
 float Fraction::operator*(float num){
+    //cout << "9" << endl;
+    long check1 = long(this->numerator) *num;
+    long check2 = long(this->denominator);
+    if (check1  > INT_MAX *check2 ||  check1 < INT_MIN || check2 < INT_MIN){
+        throw std::overflow_error (" Note we're using INTEGERS");
+    }
     double numer = double(this->numerator)*num;
     return numer/this->denominator;
 }
 
-
-Fraction operator*(float num, const Fraction &frac){
-    return (double(frac.numerator)/frac.denominator)*num;
+//num*frc
+Fraction operator*(float num, const Fraction &frc){
+    //cout << "10" << endl;
+    long check1 = long(frc.numerator) *num;
+    long check2 = long(frc.denominator);
+    if (check1  > INT_MAX *check2 ||  check1 < INT_MIN || check2 < INT_MIN){
+        throw std::overflow_error (" Note we're using INTEGERS");
+    }
+    return (double(frc.getNumerator())/frc.getDenominator())*num;
 }
 
-
-Fraction operator*(const Fraction &frac , float num){
-    return (double(frac.numerator)/frac.denominator)*num;
-}
-
+// *this/frc
 Fraction Fraction::operator/(const Fraction& frc)  {
-    if (frc.numerator == 0){
+    //cout << "11" << endl;
+    if (frc.getNumerator() == 0){
         throw std::runtime_error("Dividing by 0 is illegal!");
     }
-    long check1 = long(this->numerator) * frc.denominator;
-    long check2 = long(this->denominator) * frc.numerator;
+    long check1 = long(this->numerator) * frc.getDenominator();
+    long check2 = long(this->denominator) * frc.getNumerator();
      if (check1 > INT_MAX || check2 > INT_MAX ||  check1 < INT_MIN || check2 < INT_MIN){
         throw std::overflow_error (" Note we're using INTEGERS");
     }
     int num = this -> numerator * frc.denominator;
-    int den = this -> denominator * frc.numerator;
+    int den = this -> denominator * frc.getNumerator();
     return Fraction(num, den);
 }
 
+// *this/num
 float Fraction::operator/(float num){
+    //cout << "12" << endl;
     if (num == 0){
         throw std::runtime_error("Dividing by 0 is illegal!");
     }
     Fraction number(num);
     float current = double(numerator)/denominator;
-    float frc = double(number.numerator)/number.denominator;
+    float frc = double(number.getNumerator())/number.getDenominator();
     float ans = double(current)/frc;
     return ans;
 }
 
-Fraction operator/(float num, const Fraction &frac){
-    return num/(double(frac.numerator)/frac.denominator);
+
+// num/frc
+Fraction operator/(float num, const Fraction &frc){
+    //cout << "13" << endl;
+    return num/(double(frc.getNumerator())/frc.getDenominator());
 }
 
 
+//*this == frc
 bool Fraction :: operator==(const Fraction& frc) const{
-    if (this ->numerator == 0 && frc.numerator == 0){
+    //cout << "14" << endl;
+    if (this ->numerator == 0 && frc.getNumerator() == 0){
         return true;
     }
     double ans1 = std::round(double(this->numerator)/this->denominator * 1000) / 1000.0;
-    double ans2 = std::round(double(frc.numerator)/frc.denominator * 1000) / 1000.0;
+    double ans2 = std::round(double(frc.getNumerator())/frc.getDenominator() * 1000) / 1000.0;
     if (ans1 == ans2){
         return true;
     }
     return false;
 }
 
+// *this == num
 bool Fraction :: operator==(const float& num) const{
+    //cout << "15" << endl;
     double ans1 = std::round(double(this->numerator)/this->denominator*1000) / 1000.0;
     double ans2 = std::round(num *1000)/1000.0;
     if (ans1 != ans2){
         return false;
     }
     return true;
+    
 }
 
 
-
+// *this <= frc
 bool Fraction :: operator<=(const Fraction& frc) const{
-    if ((this -> numerator* frc.denominator) <= (frc.numerator*this -> denominator)){
+    //cout << "16" << endl;
+    if ((this -> numerator* frc.getDenominator()) <= (frc.getNumerator()*this -> denominator)){
         return true;
     } 
     return false;
 }
 
+//*this <= num
 bool Fraction :: operator<=(float num) const{
-    if (this -> numerator <= num*this -> denominator){
-        return true;
-    } 
-    return false;
+    //cout << "17" << endl;
+
+    return (operator==(num) || operator<(num));
 }
 
+// num <= frc
 bool operator<=(const float &num, const Fraction &frc){
+    //cout << "18" << endl;
     return frc >= num;
 }
 
+// *this < frc
 bool Fraction :: operator<(const Fraction& frc) const{
-    if ((this -> numerator* frc.denominator) < (frc.numerator*this -> denominator)){
-        return true;
-    } 
-    return false;
+    //cout << "19" << endl;
+    return !(operator>=(frc));
 }
 
+// *this  < num
 bool Fraction :: operator<(float num) const{
-    if (this -> numerator < num*this -> denominator){
-        return true;
-    } 
-    return false;
+    //cout << "20" << endl;
+    return !(operator>=(num));
 }
 
-bool operator<(const float& num, const Fraction& frac){
-    return frac > num;
+// num < frc
+bool operator<(const float& num, const Fraction& frc){
+    //cout << "21" << endl;
+    return !(operator>=(num,frc));
 }
 
-
+// *this >= frc
 bool Fraction :: operator>=(const Fraction& frc) const{ 
-    if ((this -> numerator* frc.denominator) >= (frc.numerator*this -> denominator)){
+    //cout << "22" << endl;
+    if ((this -> numerator* frc.getDenominator()) >= (frc.getNumerator()*this -> denominator)){
         return true;
     } 
     return false;
 }
 
+//*this >= num
 bool Fraction :: operator>=(float num) const{
+    //cout << "23" << endl;
     if (this -> numerator >= num * this -> denominator){
         return true;
     } 
     return false;
 }
 
-
+// num >= frc
 bool operator>=(const float &num, const Fraction &frc){
+    //cout << "24" << endl;
     return frc <= num;
 }
 
+// *this > frc
 bool Fraction :: operator>(const Fraction& frc) const{
-    if ((this -> numerator* frc.denominator) > (frc.numerator*this -> denominator)){
-        return true;
-    } 
-    return false;
+    //cout << "25" << endl;
+    return !(operator<=(frc));
 }
 
+
+// *this > num
 bool Fraction :: operator>(float num) const{
-    if (this -> numerator > num* this->denominator){
-        return true;
-    } 
-    return false;
+    //cout << "26" << endl;
+    return !(operator<=(num));
 }
 
+
+//
 bool operator>(const float &num, const Fraction &frc){
-    return frc < num;
+    //cout << "27" << endl;
+    return !(operator<=(num, frc));
+
 }
 
 
@@ -312,8 +369,8 @@ Fraction Fraction::operator--(int) {
 }
 
 
-std::ostream& operator<<(std::ostream& output, const Fraction& fraction){
-    return (output << fraction.numerator<< '/' << fraction.denominator);
+std::ostream& operator<<(std::ostream& output, const Fraction& frction){
+    return (output << frction.numerator<< '/' << frction.denominator);
 }
 
 std::istream& operator>>(std::istream& inpt, Fraction& frc){
@@ -335,7 +392,6 @@ std::istream& operator>>(std::istream& inpt, Fraction& frc){
 	return inpt;
 }
 
-}
 
 
 

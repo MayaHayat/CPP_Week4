@@ -6,7 +6,7 @@
 using namespace std;
 
 
-namespace ariel {
+namespace ariel {}
 class Fraction{
 
     private: 
@@ -15,7 +15,7 @@ class Fraction{
 
     public:
 
-    Fraction();
+    Fraction() : numerator(1), denominator(1){}
 
     Fraction(int numerator, int denominator);
 
@@ -36,7 +36,6 @@ class Fraction{
 
     friend Fraction operator+(float num, const Fraction &frac);
 
-    friend Fraction operator+(const Fraction &frac, float num);
 
     Fraction operator-(const Fraction& other);
 
@@ -44,16 +43,13 @@ class Fraction{
 
     friend Fraction operator-(float num, const Fraction &frac);
 
-    friend Fraction operator-(const Fraction &frac, float num);
 
     Fraction operator*(const Fraction& other);
 
     float operator*(float num);
-    //Fraction operator*(float num);
     
     friend Fraction operator*(float num, const Fraction &frac);
     
-    friend Fraction operator*(const Fraction &frac, float num);
 
     Fraction operator/(const Fraction& other);
 
@@ -61,8 +57,6 @@ class Fraction{
     
     friend Fraction operator/(float num, const Fraction &frac);
     
-    friend Fraction operator/(const Fraction &frac, float num);
-
 
     bool operator==(const Fraction& other) const;
 
@@ -113,9 +107,6 @@ class Fraction{
     void reduce();
 
 
-};
-
-    
 };
 
 #endif
