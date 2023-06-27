@@ -125,6 +125,7 @@ TEST_CASE("Make sure ++ & -- work properly on both sides") {
     Fraction fr3(2,4);
     Fraction fr4(9,3);
     CHECK( fr3++ == Fraction(1,2));
+    
     CHECK( fr4-- == Fraction(3,1));
     CHECK( ++fr3 == Fraction(5,2));
     CHECK( --fr4 == Fraction(1,1));
